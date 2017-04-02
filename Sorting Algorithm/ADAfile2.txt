@@ -1,0 +1,271 @@
+﻿				
+			
+				
+						Assignment:-#2
+
+	Insertion Sort:-
+
+	Algorithm:-
+Input:- An array of n elements A[n].
+output:-An array of Sorted elements.
+	INSERTION SORT(A,n):
+		FOR i=2 to n
+			insert element A[i] into already sorted subarray A[1 to i-1]
+			by pairwise element swaps down to its right position.
+
+Analysis of Algorithm:-
+T(n)=T(n-1)+n-1  
+Worst case:- when an array is reverse sorted. 
+N2/4+O(N) comparisons and N2/4+O(N) swaps.
+Best case:-When an array is already sorted.
+N-1 comparisons and no swaps.
+
+           Code:-
+             #include <iostream>
+	#include <vector>
+	#include <stdlib.h>
+	#include <map>
+	using namespace std;
+
+int main(){
+        int n;
+        cin>>n;
+        int arr[n];
+        for(int i=0;i<n;i++){
+                arr[i]=rand()%10000;
+        }
+
+        for(int i=0;i<n;i++)
+                cout<<arr[i]<<" ";
+
+
+        for(int i=1;i<n;i++){
+            if(arr[i]<arr[i-1]){
+                int temp=arr[i];
+                for(int j=i-1;j>=0;j--){
+                        if(arr[j]>temp){
+                                arr[j+1]=arr[j];
+                                arr[j]=temp;
+                                temp=arr[j];
+                        }
+                }
+            }
+//        for(int i=0;i<n;i++)
+  //              cout<<arr[i]<<" ";
+    //     cout<<endl;       
+        }
+        
+        for(int i=0;i<n;i++)
+                cout<<arr[i]<<" ";
+            return 0;
+}
+
+
+	Input/Output:-
+			Input n 				Output T(n)
+			1000					2.9280
+			3000					23.9130
+			5000					68.3430
+			7000					126.5890
+			10000				260.9180
+
+Graph:-
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+          
+         Merge Sort:-
+         Algorithm:-
+Input:- An array of n elements A[n].
+output:-An array of Sorted elements.
+         MERGE SORT(A,n):
+		IF n==1
+				  done(nothing to sort)
+		ELSE
+			   recursively sort A[1 to n/2] and A[n/2+1 to n]
+		MERGE the two sorted subarray.
+    
+         Code:-
+
+#include <iostream>
+#include <stdlib.h> 
+#include <vector>
+#include <ctime>
+using namespace std;
+int comp,swap;
+
+int combine(vector<int>a,int l,int h,int m){
+    int i=l,j=m+1,k=l,c[100000];
+    while(i<=m && j<=h){
+        if(a[i]<a[j]){
+            c[k]=a[i];
+            k++,i++;
+        }
+        else{
+            c[k]=a[j];
+            k++,j++;
+        }
+    }
+    while(i<=m){
+        c[k]=a[i];
+        k++,i++;
+    }
+    while(j<=h){
+        c[k]=a[j];
+        k++,j++;
+    }
+    for(i=l;i<k;i++){
+        a[i]=c[i];
+    }
+}
+
+void partition(vector<int> v,int low,int high){
+        if(low>=high)
+              return;
+        int mid=(low+high)/2;
+        partition(v,low,mid);
+        partition(v,mid+1,high);
+        combine(v,low,high,mid);
+}
+int main(){
+        int n;
+        cin>>n;
+        vector<int>v;
+        for(int i=0;i<n;i++){
+                v.push_back(rand()%100000);
+        }
+        for(int i=0;i<n;i++){
+                cout<<v[i]<<" ";
+        }
+        cout<<endl;
+ int start_s=clock();
+
+partition(v,0,n-1);
+        
+for(int i=0;i<n;i++)
+        	cout<<v[i]<<" ";        
+ int stop_s=clock();
+cout << "time: " << (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
+       return 0;
+}
+
+         Analysis of Algorithm:-
+T(n)=O(1) if n==1,
+ 2T(n/2)+ Cn  if n>1.
+= O(n*log(n)).
+Merging the subarray involves log(n) passes.On each pass,each subarray element is used in at most one comparison.So the number of comparisons per pass is n.Hence the number of comparison for Merge sort is O(n*log(n)).
+Merge sort require O(n) additional storage for the subarray.
+	
+	Graph:-
+
+	
+	
+	Input/Output:-
+			Input n 				Output T(n)
+			500					0.70000
+			1000					1.72500
+			5000					33.50300
+			10000				125.19900
+			15000				265.45400
+
+	Bubble Sort:-
+	
+	Algorithm:-
+	Input:- An array of n elements A[n].
+	   output:-An array of Sorted elements.
+  	BUBBLE SORT(A,n):
+		FOR i=n-1 to 1
+			FOR  j=0 to i
+				IF A[j] > A[j+1]
+					Swap A[j] and A[j+1] 
+				END IF
+			END FOR
+		END FOR
+	
+            Code:-
+
+#include <iostream>
+#include <stdlib.h> 
+#include <vector>
+#include <ctime>
+using namespace std;
+int comp,swap;
+
+int main(){
+        int n;
+        cin>>n;
+        vector<int> v;
+        for(int i=0;i<n;i++){
+             v.push_back(rand()%10000);
+        }
+        int start_s=clock();
+        for(int i=n-1;i>=1;i--){
+             for(int j=0;j<i;j++){
+                        if(v[j]>v[j+1]){
+                                int temp=v[j];
+                                v[j]=v[j+1];
+                                v[j+1]=temp;
+                        }
+                }
+            }
+        for(int i=0;i<n;i++){
+                cout<<v[i]<<" ";
+        }
+int stop_s=clock();
+cout << "time: " << (stop_s-start_s)/double(CLOCKS_PER_SEC)*1000 << endl;
+
+
+        return 0;
+}
+			
+	Analysis of Algorithm:-
+Best case :- O(n)
+This time complexity can occur if the array is already sorted, and that means that no swap occurred and only 1 iteration of n elements
+Worst case:- O(n2).
+The worst case is if the array is already sorted but in descending order. This means that in the first iteration it would have to look at n elements, then after that it would look n - 1 elements (since the biggest integer is at the end) and so on and so forth till 1 comparison occurs.
+O(n) = n + n - 1 + n - 2 ... + 1 = (n*(n + 1))/2 = O(n2)
+
+	Input/Output:-
+			Input n 				Output T(n)
+			500					2.4280
+			1000					10.2140
+			5000					256.7070
+			10000				1049.3700
+			15000				2365.3000
+
+	
+	Graph:-
+
+
+
+
+
+
+	Heap Sort:-
+	
+	Algorithm:-
+    Input:- An array of n elements A[n].
+    output:-An array of Sorted elements.
+	  HEAP SORT(A,n):
+		H
